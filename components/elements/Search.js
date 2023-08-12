@@ -13,7 +13,9 @@ const Search = ({ }) => {
   useEffect(() => {
     if (value) {
       setSearch(items.filter(item =>
-        item.name.toLowerCase().includes(value.toLowerCase()) || item.description.toLowerCase().includes(value.toLowerCase())
+        item.name.toLowerCase().includes(value.toLowerCase()) || 
+        item.description.toLowerCase().includes(value.toLowerCase()) ||
+        item.category.toLowerCase().includes(value.toLowerCase())
       ))
     } else {
       setSearch(null);
@@ -22,7 +24,7 @@ const Search = ({ }) => {
 
   return (
     <input
-      placeholder='Find squirreled stuff'
+      placeholder='Find anything'
       type="text"
       className='text-black font-normal rounded-full focus:outline-none py-2 px-5 w-72 lg:w-96 ml-64'
       onChange={onChange}

@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import Image from 'next/image'
 import { useContext } from 'react'
 import ItemContext from '@/context/ItemContext'
+import getLocation from '@/utils/getLocation'
 
 const Home = ({ }) => {
   const router = useRouter();
@@ -27,7 +28,7 @@ const Home = ({ }) => {
                 <Image fill style={{ objectFit: 'contain' }} src={item.image} />
               </div>
               <p className='mt-2 font-medium'>{item.name}</p>
-              <p className='text-sm'>{item.location}</p>
+              <p className='text-xs text-zinc-500'>{getLocation(item.location)}</p>
             </div>
           )) : items ? items.map(item => (
             <div id="item-card" className='mb-10  w-44 text-left' key={item._id}>
@@ -35,7 +36,7 @@ const Home = ({ }) => {
                 <Image fill style={{ objectFit: 'contain' }} src={item.image} />
               </div>
               <p className='mt-2 font-medium'>{item.name}</p>
-              <p className='text-sm'>{item.location}</p>
+              <p className='text-xs text-zinc-500'>{getLocation(item.location)}</p>
             </div>
           )) : <p>No items found</p>
         }

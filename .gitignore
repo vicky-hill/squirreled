@@ -1,0 +1,13 @@
+node_modules/
+Screenshots/
+Icon?
+.DS_Store
+config.js
+.env
+env.js
+.expo/
+package-lock.json
+.next
+
+# Local Netlify folder
+.netlify

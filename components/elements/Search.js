@@ -1,16 +1,34 @@
-import React from 'react'
+import React, { useContext, useState, useEffect } from 'react'
+import ItemContext from '@/context/ItemContext'
 
-const Search = ({ onChange, value }) => {
 
-    return (
-        <input
-          placeholder='Check existing nail polish'
-          type="text"
-          className='border border-stone-200 rounded-full focus:outline-none py-2 px-5 w-72 lg:w-96'
-          onChange={onChange}
-          value={value}
-        />
-    )
+const Search = ({ }) => {
+  const [value, setValue] = useState("");
+  const { setSearch, items } = useContext(ItemContext);
+
+  const onChange = e => {
+    setValue(e.target.value);
+  }
+
+  useEffect(() => {
+    if (value) {
+      setSearch(items.filter(item =>
+        item.name.toLowerCase().includes(value.toLowerCase()) || item.description.toLowerCase().includes(value.toLowerCase())
+      ))
+    } else {
+      setSearch(null);
+    }
+  }, [value])
+
+  return (
+    <input
+      placeholder='Find squirreled stuff'
+      type="text"
+      className='text-black font-normal rounded-full focus:outline-none py-2 px-5 w-72 lg:w-96 ml-64'
+      onChange={onChange}
+      value={value}
+    />
+  )
 }
 
 export default Search;

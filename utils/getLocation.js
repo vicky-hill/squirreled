@@ -6,8 +6,12 @@ const locations = {
     ["LR-5"]: "Living Room :: Closet :: Box 5",
     ["LR-6"]: "Living Room :: Closet :: Box 6",
     ["LR-7"]: "Living Room :: Closet :: Box 7",
-    ["LR-8"]: "Living Room :: Closet :: Box 8"
-}
+    ["LR-8"]: "Living Room :: Closet :: Box 8",
+    ["LR-8"]: "Living Room :: Closet :: Box 8",
+    ["Living Room :: Golden Tote"]: "Living Room :: Golden Tote",
+    ["Hall Way :: Closet"]: "Hall Way :: Closet",
+    ["Cody's Drawer"]: "Cody's Drawer"
+}   
 
 const getLocation = (locationCode) => {
     return locations[locationCode]

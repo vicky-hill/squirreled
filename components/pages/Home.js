@@ -20,22 +20,22 @@ const Home = ({ }) => {
 
   return (
     <Page>
-      <div className='container text-center mt-24 pt-10 px-10 lg:px-20 flex space-x-3 flex-wrap'>
+      <div className='container text-center mt-10 pt-10 px-10 flex flex-wrap gap-7'>
         {
           search ? search.map(item => (
             <div id="item-card" className='mb-10  w-44 text-left' key={item._id}>
               <div id="item-card__image" className='h-44 w-44 relative rounded-md overflow-hidden'>
-                <Image fill style={{ objectFit: 'contain' }} src={item.image} />
+                <Image fill style={{ objectFit: 'cover' }} src={item.image} />
               </div>
-              <p className='mt-2 font-medium'>{item.name}</p>
+              <p className='mt-2 font-medium text-sm'>{item.name}</p>
               <p className='text-xs text-zinc-500'>{getLocation(item.location)}</p>
             </div>
           )) : items ? items.map(item => (
             <div id="item-card" className='mb-10  w-44 text-left' key={item._id}>
               <div id="item-card__image" className='h-44 w-44 relative rounded-md overflow-hidden'>
-                <Image fill style={{ objectFit: 'contain' }} src={item.image} />
+                <Image fill style={{ objectFit: 'cover' }} src={item.image} />
               </div>
-              <p className='mt-2 font-medium'>{item.name}</p>
+              <p className='mt-2 font-medium text-sm'>{item.name}</p>
               <p className='text-xs text-zinc-500'>{getLocation(item.location)}</p>
             </div>
           )) : <p>No items found</p>

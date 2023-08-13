@@ -15,7 +15,8 @@ const Search = ({ }) => {
       setSearch(items.filter(item =>
         item.name.toLowerCase().includes(value.toLowerCase()) || 
         item.description.toLowerCase().includes(value.toLowerCase()) ||
-        item.category.toLowerCase().includes(value.toLowerCase())
+        item.category.toLowerCase().includes(value.toLowerCase()) ||
+        item.location.toLowerCase().includes(value.toLocaleLowerCase())
       ))
     } else {
       setSearch(null);
@@ -24,7 +25,7 @@ const Search = ({ }) => {
 
   return (
     <input
-      placeholder='Find anything'
+      placeholder='Find anything...'
       type="text"
       className='text-black font-normal rounded-full focus:outline-none py-2 px-5 w-72 lg:w-96 ml-64'
       onChange={onChange}

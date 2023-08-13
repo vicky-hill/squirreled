@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Header from './Header';
 
-const Page = ({ children, title = 'Nail Polish' }) => {
+const Page = ({ children, title = 'Squirreled' }) => {
     
     return (
         <div>

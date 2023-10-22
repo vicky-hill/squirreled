@@ -6,17 +6,20 @@ const Search = ({ }) => {
   const [value, setValue] = useState("");
   const { setSearch, items } = useContext(ItemContext);
 
+  console.log(items)
+
   const onChange = e => {
     setValue(e.target.value);
   }
 
   useEffect(() => {
-    if (value) {
+    if (value && items.length) {
       setSearch(items.filter(item =>
         item.name.toLowerCase().includes(value.toLowerCase()) || 
         item.description.toLowerCase().includes(value.toLowerCase()) ||
         item.category.toLowerCase().includes(value.toLowerCase()) ||
-        item.location.toLowerCase().includes(value.toLocaleLowerCase())
+        item.location?.name.toLowerCase().includes(value.toLocaleLowerCase()) ||
+        item.location?.description.toLowerCase().includes(value.toLocaleLowerCase())
       ))
     } else {
       setSearch(null);

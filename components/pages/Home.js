@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import Image from 'next/image'
 import { useContext } from 'react'
 import ItemContext from '@/context/ItemContext'
-import getLocation from '@/utils/getLocation'
+import Item from '../elements/Item'
 
 const Home = ({ }) => {
   const router = useRouter();
@@ -23,21 +23,9 @@ const Home = ({ }) => {
       <div className='container text-center mt-10 pt-10 px-10 flex flex-wrap gap-7'>
         {
           search ? search.map(item => (
-            <div id="item-card" className='mb-10  w-44 text-left' key={item._id}>
-              <div id="item-card__image" className='h-44 w-44 relative rounded-md overflow-hidden'>
-                <Image fill style={{ objectFit: 'cover' }} src={item.image} />
-              </div>
-              <p className='mt-2 font-medium text-sm'>{item.name}</p>
-              <p className='text-xs text-zinc-500'>{getLocation(item.location)}</p>
-            </div>
+            <Item item={item} />
           )) : items ? items.map(item => (
-            <div id="item-card" className='mb-10  w-44 text-left' key={item._id}>
-              <div id="item-card__image" className='h-44 w-44 relative rounded-md overflow-hidden'>
-                <Image fill style={{ objectFit: 'cover' }} src={item.image} />
-              </div>
-              <p className='mt-2 font-medium text-sm'>{item.name}</p>
-              <p className='text-xs text-zinc-500'>{getLocation(item.location)}</p>
-            </div>
+            <Item item={item} />
           )) : <p>No items found</p>
         }
       </div>

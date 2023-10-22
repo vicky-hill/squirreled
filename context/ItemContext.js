@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect } from "react"
 import api from "@/utils/api"
 import ItemModal from "@/components/item/ItemModal"
+import TrashModal from "@/components/item/TrashModal"
 
 const ItemContext = createContext()
 
@@ -37,12 +38,27 @@ export const ItemContextProvider = ({ children }) => {
     }
   }
 
-  const openItemModal = (item) => {
-    setModal(true);
+  /** @param {string} itemID */
+  const trashItem = async (itemID) => {
+    try {
+      await api.put(`items/${itemID}/trash`);
+
+      setItems(items => (
+        items.filter(item => item._id !== itemID)
+      ))
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  /** @param {object} item */
+  /** @param {string} type - move || trash */
+  const openModal = (item, type) => {
+    setModal(type ? type : 'move');
     setItem(item);
   }
 
-  const closeItemModal = () => {
+  const closeModal = () => {
     setModal(false);
     setItem(null);
   }
@@ -52,21 +68,29 @@ export const ItemContextProvider = ({ children }) => {
     items,
     search,
     setSearch,
-    openItemModal,
-    closeItemModal,
-    moveItem
+    openModal,
+    closeModal,
+    moveItem,
+    trashItem
   }
 
   return (
     <>
       <ItemContext.Provider value={value}>
         {children}
-        
+
         <ItemModal
-          modal={modal}
+          modal={modal === 'move'}
           setModal={setModal}
           item={item}
         />
+
+        <TrashModal
+          modal={modal === 'trash'}
+          setModal={setModal}
+          item={item}
+        />
+
       </ItemContext.Provider>
     </>
   )

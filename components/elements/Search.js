@@ -6,8 +6,6 @@ const Search = ({ }) => {
   const [value, setValue] = useState("");
   const { setSearch, items } = useContext(ItemContext);
 
-  console.log(items)
-
   const onChange = e => {
     setValue(e.target.value);
   }

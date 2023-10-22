@@ -1,12 +1,12 @@
 import { useContext } from 'react'
 import Image from 'next/image'
-import { ArrowRightCircle } from 'react-feather'
+import { ArrowRightCircle, Trash } from 'react-feather'
 import ItemContext from '@/context/ItemContext'
 
 
 const Item = ({ item }) => {
 
-    const { openItemModal } = useContext(ItemContext);
+    const { openModal } = useContext(ItemContext);
 
     return (
         <>
@@ -15,8 +15,17 @@ const Item = ({ item }) => {
                     <Image fill style={{ objectFit: 'cover' }} src={item.image} />
                     <ArrowRightCircle
                         className='hidden group-hover:block transition-all absolute bottom-2 right-2 cursor-pointer'
+                        size={20}
                         color="white"
-                        onClick={() => openItemModal(item)}
+                        onClick={() => openModal(item, 'move')}
+                        title="Move item to different location"
+                    />
+                    <Trash
+                        className='hidden group-hover:block transition-all absolute bottom-2 right-9 cursor-pointer'
+                        size={20}
+                        color="white"
+                        onClick={() => openModal(item, 'trash')}
+                        title="Throw item in trash"
                     />
                 </div>
                 <p className='mt-2 font-medium text-sm'>{item.name}</p>

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import classNames from 'classnames'
 import Button from './Button'
 
-const Modal = ({ modal, setModal, title, shouldCloseOnOutsideClick, children, data }) => {
+const Modal = ({ modal, setModal, title, shouldCloseOnOutsideClick, children, saveChanges }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const open = () => setIsOpen(true);
@@ -45,7 +45,7 @@ const Modal = ({ modal, setModal, title, shouldCloseOnOutsideClick, children, da
                     </div>
 
                     {/* Footer */}
-                    <div className="modal__footer">
+                    <div className="modal__footer" onClick={() => {saveChanges(); close();}}>
                         <button className="">Save changes</button>
                     </div>
                 </div>

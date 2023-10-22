@@ -23,6 +23,20 @@ export const ItemContextProvider = ({ children }) => {
     }
   }
 
+  /** @param {string} itemID */
+  /** @param {string} locationID */
+  const moveItem = async (itemID, locationID) => {
+    try {
+      const updatedItem = await api.put(`items/${itemID}/move`, { location: locationID });
+
+      setItems(items => (
+        items.map(item => item._id === itemID ? updatedItem : item)
+      ))
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   const openItemModal = (item) => {
     setModal(true);
     setItem(item);
@@ -39,20 +53,21 @@ export const ItemContextProvider = ({ children }) => {
     search,
     setSearch,
     openItemModal,
-    closeItemModal
+    closeItemModal,
+    moveItem
   }
 
   return (
     <>
       <ItemContext.Provider value={value}>
         {children}
+        
+        <ItemModal
+          modal={modal}
+          setModal={setModal}
+          item={item}
+        />
       </ItemContext.Provider>
-
-      <ItemModal
-        modal={modal}
-        setModal={setModal}
-        item={item}
-      />
     </>
   )
 }

@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect } from "react"
 import api from "@/utils/api"
-import Modal from "@/components/elements/Modal"
+import ItemModal from "@/components/item/ItemModal"
 
 const ItemContext = createContext()
 
@@ -48,11 +48,11 @@ export const ItemContextProvider = ({ children }) => {
         {children}
       </ItemContext.Provider>
 
-      <Modal title="Controlled Modal" modal={modal} setModal={setModal} >
-        <p className='my-4'>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis porro blanditiis quidem ipsa ut vero, tempora possimus inventore omnis quam?
-        </p>
-      </Modal>
+      <ItemModal
+        modal={modal}
+        setModal={setModal}
+        item={item}
+      />
     </>
   )
 }

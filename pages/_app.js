@@ -1,11 +1,14 @@
 import '@/sass/main.scss'
 import { ItemContextProvider } from '@/context/ItemContext';
+import { LocationContextProvider } from '@/context/LocationContext';
 
 function App({ Component, pageProps }) {
   return (
-    <ItemContextProvider>
-      <Component {...pageProps} />
-    </ItemContextProvider>
+    <LocationContextProvider>
+      <ItemContextProvider>
+        <Component {...pageProps} />
+      </ItemContextProvider>
+    </LocationContextProvider>
   )
 }
 

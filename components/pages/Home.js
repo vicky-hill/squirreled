@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import Image from 'next/image'
 import { useContext } from 'react'
 import ItemContext from '@/context/ItemContext'
-import Item from '../elements/Item'
+import Item from '../item/Item'
 
 const Home = ({ }) => {
   const router = useRouter();

@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react'
-import { PropTypes } from 'prop-types'
 import classNames from 'classnames'
 import Button from './Button'
 
-const Modal = ({ modal, setModal, title, shouldCloseOnOutsideClick, children }) => {
+const Modal = ({ modal, setModal, title, shouldCloseOnOutsideClick, children, data }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const open = () => setIsOpen(true);
@@ -47,24 +46,12 @@ const Modal = ({ modal, setModal, title, shouldCloseOnOutsideClick, children }) 
 
                     {/* Footer */}
                     <div className="modal__footer">
-                        <button className="btn btn-grey" onClick={close}>Close</button>
-                        <button className="btn btn-teal">Save changes</button>
+                        <button className="">Save changes</button>
                     </div>
                 </div>
             </div>
         </>
     )
-}
-
-Modal.defaultProps = {
-    shouldCloseOnOutsideClick: true
-}
-
-Modal.propTypes = {
-    open: PropTypes.bool,
-    close: PropTypes.func,
-    shouldCloseOnOutsideClick: PropTypes.bool,
-    title: PropTypes.string
 }
 
 export default Modal;

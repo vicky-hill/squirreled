@@ -1,18 +1,36 @@
 import { useContext } from 'react'
 import Image from 'next/image'
-import { ArrowRightCircle, Trash } from 'react-feather'
+import { ArrowRightCircle, Trash, Circle, CheckCircle } from 'react-feather'
 import ItemContext from '@/context/ItemContext'
 
 
 const Item = ({ item }) => {
 
-    const { openModal } = useContext(ItemContext);
+    const { openModal, selectItem, selectedItems } = useContext(ItemContext);
 
     return (
         <>
             <div id="item-card" className='mb-10  w-44 text-left relative' key={item._id}>
                 <div id="item-card__image" className='group h-44 w-44 relative rounded-md overflow-hidden'>
                     <Image fill style={{ objectFit: 'cover' }} src={item.image} />
+                    {
+                        selectedItems.includes(item._id) ? (
+                            <CheckCircle
+                            className={`${!selectedItems.length ? 'hidden' : ''} group-hover:block transition-all absolute top-2 left-2 cursor-pointer`}
+                            size={20}
+                            color="white"
+                            onClick={() => selectItem(item._id)}
+                        />
+                        ) : (
+                            <Circle
+                            className={`${!selectedItems.length ? 'hidden' : ''} group-hover:block transition-all absolute top-2 left-2 cursor-pointer`}
+                            size={20}
+                            color="white"
+                            onClick={() => selectItem(item._id)}
+                        />
+                        )
+                    }
+    
                     <ArrowRightCircle
                         className='hidden group-hover:block transition-all absolute bottom-2 right-2 cursor-pointer'
                         size={20}

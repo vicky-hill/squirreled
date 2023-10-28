@@ -2,11 +2,25 @@ import { useEffect, useState } from 'react'
 import classNames from 'classnames'
 import Button from './Button'
 
-const Modal = ({ modal, setModal, title, shouldCloseOnOutsideClick, children, saveChanges, yes }) => {
+const Modal = ({ modal, setModal, title, shouldCloseOnOutsideClick, children, onSave, yes, onClose, onOpen }) => {
     const [isOpen, setIsOpen] = useState(false);
 
-    const open = () => setIsOpen(true);
-    const close = () => setModal ? setModal(false) : setIsOpen(false);
+    const open = () => { 
+        setIsOpen(true);
+        onOpen && onOpen();
+    }
+   
+    const close = () => {
+        if (setModal) {
+            setModal(false);
+        }
+        else {
+            setIsOpen(false)
+        }
+
+        onClose && onClose();
+    }
+
 
     const classes = classNames('modal', {
         'open': isOpen || modal
@@ -45,9 +59,15 @@ const Modal = ({ modal, setModal, title, shouldCloseOnOutsideClick, children, sa
                     </div>
 
                     {/* Footer */}
-                    <div className="modal__footer" onClick={() => {saveChanges(); close();}}>
-                        { saveChanges && <button>Save changes</button>}
-                        { yes && <button>Yes</button> }
+                    <div className="modal__footer">
+                        {onSave && <button type='submit' onClick={onSave}> Save changes</button>}
+
+                        {yes && (
+                            <>
+                                <button className='mr-6' onClick={close}>No</button>
+                                <button onClick={() => { yes(); close(); }}>Yes</button>
+                            </>
+                        )}
                     </div>
                 </div>
             </div>

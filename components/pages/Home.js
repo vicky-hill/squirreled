@@ -1,14 +1,12 @@
 import Page from '../layout/Page'
-import Button from '../elements/Button'
-import { useRouter } from 'next/router'
-import Image from 'next/image'
 import { useContext } from 'react'
 import ItemContext from '@/context/ItemContext'
 import Item from '../item/Item'
+import AddItem from '../add/AddItem'
+import { X, ArrowRightCircle } from 'react-feather'
 
 const Home = ({ }) => {
-  const router = useRouter();
-  const { items, search } = useContext(ItemContext);
+  const { items, search, selectedItems, cancelSelection, openModal } = useContext(ItemContext);
 
   if (!items) {
     return <Page>
@@ -20,17 +18,36 @@ const Home = ({ }) => {
 
   return (
     <Page>
-      <div className='container text-center mt-10 pt-10 px-10 flex flex-wrap gap-7'>
+      <div className='container mt-10 pt-10 px-10'>
         {
-          search ? search.map(item => (
-            <Item item={item} />
-          )) : items ? items.map(item => (
-            <Item item={item} />
-          )) : <p>No items found</p>
+          selectedItems.length ? (
+            <>
+              <div className='cursor-pointer inline-block mr-7 mb-8' onClick={cancelSelection}>
+                <X className='inline-block mb-1 mr-1 ' size={18} />
+                <span className='mb-5'>Cancel Selection</span>
+              </div>
+
+              <div className='cursor-pointer inline-block mb-8' onClick={openModal}>
+                <ArrowRightCircle className='inline-block mb-1 mr-1 ' size={18} />
+                <span className='mb-5'>Move Items</span>
+              </div>
+            </>
+          ) : null
         }
+
+        <div className='text-center flex flex-wrap gap-7'>
+          {
+            search ? search.map(item => (
+              <Item item={item} />
+            )) : items ? items.map(item => (
+              <Item item={item} />
+            )) : <p>No items found</p>
+          }
+        </div>
       </div>
 
-      <Button onClick={() => router.push('/add')} floating><i className="fas fa-plus"></i></Button>
+
+      <AddItem />
     </Page>
   )
 }

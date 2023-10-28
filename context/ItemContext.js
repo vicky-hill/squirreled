@@ -10,6 +10,7 @@ export const ItemContextProvider = ({ children }) => {
   const [search, setSearch] = useState(null);
   const [modal, setModal] = useState(null);
   const [item, setItem] = useState(null);
+  const [selectedItems, setSelectedItems] = useState([]);
 
   useEffect(() => {
     fetchItems();
@@ -33,6 +34,33 @@ export const ItemContextProvider = ({ children }) => {
       setItems(items => (
         items.map(item => item._id === itemID ? updatedItem : item)
       ))
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  /** @param {array} ids */
+  /** @param {string} locationID */
+  const moveItems = async (ids, locationID) => {
+    try {
+      const updatedItems = await api.put(`items/move`, { location: locationID, ids });
+      const updatedItemIDs = updatedItems.map(item => item._id);
+
+      setItems(items => (
+        items.map(item =>
+          updatedItemIDs.includes(item._id) ?
+            updatedItems.find(updatedItem => updatedItem._id === item._id) :
+            item
+        )
+      ));
+
+      search && setSearch(items => (
+        items.filter(item => (
+          !updatedItemIDs.includes(item._id)
+        ))
+      ));
+
+      setSelectedItems([]);
     } catch (err) {
       console.log(err);
     }
@@ -63,6 +91,18 @@ export const ItemContextProvider = ({ children }) => {
     setItem(null);
   }
 
+  /** @param {string} itemID */
+  const selectItem = (itemID) => {
+    selectedItems.includes(itemID) ? (
+      setSelectedItems(items => items.filter(item => item !== itemID))
+    ) : (
+      setSelectedItems(items => [...items, itemID])
+    )
+  }
+
+  const cancelSelection = () => {
+    setSelectedItems([]);
+  }
 
   const value = {
     items,
@@ -71,7 +111,11 @@ export const ItemContextProvider = ({ children }) => {
     openModal,
     closeModal,
     moveItem,
-    trashItem
+    moveItems,
+    trashItem,
+    selectItem,
+    selectedItems,
+    cancelSelection
   }
 
   return (

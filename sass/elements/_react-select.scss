@@ -1,0 +1,9 @@
+.location-select {
+    &__control {
+
+        &--is-focused {
+            border-color: #cccccc !important;
+            box-shadow: none !important;
+        }
+    }
+}

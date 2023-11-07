@@ -10,9 +10,9 @@ const firebaseConfig = {
   appId: "1:1068260936491:web:b17d1e41c3bacbf198536e"
 };
 
-
 const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
+export const auth = getAuth(app); 
+// Add authorization to firebase project to use auth features
 
 export const authorization = {
   resetPassword: (options, email) => async dispatch => {

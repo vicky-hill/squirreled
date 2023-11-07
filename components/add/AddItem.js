@@ -1,28 +1,31 @@
 import { useContext, useState, useEffect } from "react"
-import Button from "../elements/Button"
-import Modal from "../elements/Modal"
+import Button from "../ui/Button"
+import Modal from "../ui/Modal"
 import Form, { TextInput } from "../form/Form"
 import * as Yup from "yup"
 import CreatableSelect from 'react-select/creatable'
 import LocationContext from "@/context/LocationContext"
-import { IKContext, IKUpload } from 'imagekitio-react'
+import ItemContext from "@/context/ItemContext"
+import ImageKit from "../elements/ImageKit"
 
 const validationSchema = Yup.object({
     name: Yup.string().required('Please type something'),
     description: Yup.string()
-})
+});
 
 const AddItem = ({ }) => {
-    const [modal, setModal] = useState(false);
+    const [modal, setModal] = useState(true);
     const [options, setOptions] = useState([]);
     const [form, setForm] = useState(true);
-    const [file, setFile] = useState(null);
+    const [image, setImage] = useState(null);
     const [values, setValues] = useState({
         name: '',
-        description: ''
+        description: '',
+        location: ''
     });
 
     const { locations } = useContext(LocationContext);
+    const { addItem } = useContext(ItemContext);
 
     useEffect(() => {
         if (locations) {
@@ -32,13 +35,17 @@ const AddItem = ({ }) => {
         }
     }, [locations]);
 
-    const handleUpload = (e) => {
-        setFile(e.target.files[0])
-    }
-
     const onSubmit = async () => {
         try {
-            console.log('submit', values);
+
+            const payload = {
+                ...values,
+                category: 'Misc',
+                image
+            }
+
+            await addItem(payload);
+
             setModal(false);
 
         } catch (err) {
@@ -53,7 +60,10 @@ const AddItem = ({ }) => {
     }
 
     const onChange = (e) => {
-        console.log('change', e)
+        setValues(values => ({
+            ...values,
+            location: e.value
+        }));
     }
 
     const resetForm = () => {
@@ -67,38 +77,21 @@ const AddItem = ({ }) => {
 
     const onUploadStart = (evt) => {
         console.log('Started', evt);
-      };
-    
-      const onUploadProgress = (evt) => {
+    };
+
+    const onUploadProgress = (evt) => {
         console.log('Progress: ', evt);
-      };
-    
-      const onError = (err) => {
+    };
+
+    const onError = (err) => {
         console.log('Error');
         console.log(err);
-      };
-    
-      const onSuccess = (res) => {
+    };
+
+    const onSuccess = (res) => {
         console.log('Success');
         console.log(res);
-      };
-
-    const authenticator = async () => {
-        try {
-    
-            const response = await fetch('https://masterapi.pro/api/minite/image/imagekit');
-    
-            if (!response.ok) {
-                const errorText = await response.text();
-                throw new Error(`Request failed with status ${response.status}: ${errorText}`);
-            }
-    
-            const data = await response.json();
-            const { signature, expire, token } = data;
-            return { signature, expire, token };
-        } catch (error) {
-            throw new Error(`Authentication request failed: ${error.message}`);
-        }
+        setImage(res.url)
     };
 
     return (
@@ -119,6 +112,7 @@ const AddItem = ({ }) => {
                                 <TextInput name="description" />
 
                                 <label className='form__group-label'>Location</label>
+
                                 <CreatableSelect
                                     isClearable options={options}
                                     classNamePrefix='location-select'
@@ -127,20 +121,12 @@ const AddItem = ({ }) => {
                                     placeholder="Select location"
                                 />
 
-                                <IKContext
-                                    publicKey={process.env.IK_PUBLIC_KEY}
-                                    urlEndpoint='https://ik.imagekit.io/minite'
-                                    authenticator={authenticator}
-                                >
-                                    <IKUpload
-                                        fileName="img.jpg"
-                                        folder={"/Squirreled"}
-                                        onError={onError}
-                                        onSuccess={onSuccess}
-                                        onUploadStart={onUploadStart}
-                                        onUploadProgress={onUploadProgress}
-                                    />
-                                </IKContext>
+                                <ImageKit
+                                    onUploadStart={onUploadStart}
+                                    onUploadProgress={onUploadProgress}
+                                    onError={onError}
+                                    onSuccess={onSuccess}
+                                />
 
                                 <button className="mt-6" type="submit">Add new item</button>
                             </Form>

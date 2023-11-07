@@ -1,5 +1,5 @@
 import { useContext } from "react"
-import Modal from "../elements/Modal"
+import Modal from "../ui/Modal"
 import ItemContext from "@/context/ItemContext"
 
 const TrashModal = ({ modal, setModal, item }) => {

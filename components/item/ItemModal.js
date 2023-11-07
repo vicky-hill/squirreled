@@ -1,5 +1,5 @@
 import { useContext, useState } from "react"
-import Modal from "../elements/Modal"
+import Modal from "../ui/Modal"
 import LocationContext from "@/context/LocationContext"
 import ItemContext from "@/context/ItemContext"
 import classNames from "classnames"

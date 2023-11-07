@@ -7,6 +7,7 @@ const ItemContext = createContext()
 
 export const ItemContextProvider = ({ children }) => {
   const [items, setItems] = useState(null);
+  const [error, setError] = useState(null);
   const [search, setSearch] = useState(null);
   const [modal, setModal] = useState(null);
   const [item, setItem] = useState(null);
@@ -21,9 +22,27 @@ export const ItemContextProvider = ({ children }) => {
       const items = await api.get('items');
       setItems(items);
     } catch (err) {
+      setError('Failed to load squirreled items');
+    }
+  }
+
+  /** @param {string} name */
+  /** @param {string} description */
+  /** @param {string} category */
+  /** @param {string} image */
+  /** @param {string} location */
+  const addItem = async (payload) => {
+    try {
+      const item = await api.post(`items`, payload);
+
+      setItems(items => (
+        [item, ...items]
+      ));
+    } catch (err) {
       console.log(err);
     }
   }
+
 
   /** @param {string} itemID */
   /** @param {string} locationID */
@@ -110,12 +129,14 @@ export const ItemContextProvider = ({ children }) => {
     setSearch,
     openModal,
     closeModal,
+    addItem,
     moveItem,
     moveItems,
     trashItem,
     selectItem,
     selectedItems,
-    cancelSelection
+    cancelSelection,
+    error
   }
 
   return (

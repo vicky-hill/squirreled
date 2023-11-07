@@ -21,7 +21,6 @@
             background-color: white;
 
             &:focus {
-                box-shadow: 0 0 0 3px mix(white, $primary, 75%);
                 outline: none;
                 border: 1px solid mix(white, $primary, 25%);
             }

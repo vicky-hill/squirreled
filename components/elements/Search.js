@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react'
 import ItemContext from '@/context/ItemContext'
 
-
 const Search = ({ }) => {
   const [value, setValue] = useState("");
   const { setSearch, items } = useContext(ItemContext);
@@ -28,7 +27,7 @@ const Search = ({ }) => {
     <input
       placeholder='Find anything...'
       type="text"
-      className='text-black font-normal rounded-full focus:outline-none py-2 px-5 w-72 lg:w-96 ml-64'
+      className='shadow-sm text-black font-normal rounded-full focus:outline-none py-2 px-5 w-72 lg:w-96 ml-64'
       onChange={onChange}
       value={value}
     />

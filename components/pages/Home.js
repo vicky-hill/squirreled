@@ -6,9 +6,9 @@ import AddItem from '../add/AddItem'
 import { X, ArrowRightCircle } from 'react-feather'
 
 const Home = ({ }) => {
-  const { items, search, selectedItems, cancelSelection, openModal } = useContext(ItemContext);
+  const { items, search, selectedItems, cancelSelection, openModal, error } = useContext(ItemContext);
 
-  if (!items) {
+  if (!items && !error) {
     return <Page>
       <div className='container text-center mt-24 pt-10 px-10 lg:px-20 flex justify-between flex-wrap'>
         loading

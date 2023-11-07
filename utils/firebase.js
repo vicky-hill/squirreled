@@ -2,13 +2,14 @@ import { initializeApp } from "firebase/app";
 import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCT2vViP7h9WcVD998s8wt9bxZ4B0HaPdo",
-  authDomain: "hot-sauce-9985c.firebaseapp.com",
-  projectId: "hot-sauce-9985c",
-  storageBucket: "hot-sauce-9985c.appspot.com",
-  messagingSenderId: "787897816912",
-  appId: "1:787897816912:web:cba26670642d785d127e55"
+  apiKey: "AIzaSyDjZunmT_pciOjRAEuDBVGIR5oqlFlztPU",
+  authDomain: "squirreled-27d04.firebaseapp.com",
+  projectId: "squirreled-27d04",
+  storageBucket: "squirreled-27d04.appspot.com",
+  messagingSenderId: "1068260936491",
+  appId: "1:1068260936491:web:b17d1e41c3bacbf198536e"
 };
+
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);

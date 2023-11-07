@@ -14,7 +14,7 @@ const validationSchema = Yup.object({
 });
 
 const AddItem = ({ }) => {
-    const [modal, setModal] = useState(true);
+    const [modal, setModal] = useState(false);
     const [options, setOptions] = useState([]);
     const [form, setForm] = useState(true);
     const [image, setImage] = useState(null);

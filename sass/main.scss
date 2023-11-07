@@ -6,6 +6,9 @@
 @tailwind utilities;
 
 @import './base/base';
+@import './base/reset';
+@import './base/layout';
+
 @import './elements/button';
 @import './elements/form';
 @import './elements/modal';

@@ -66,10 +66,10 @@ const Input = ({ number, dollar, name, label, onChange, value, error, placeholde
 
     return (
         <div className={`${groupClassName} form__group ${error ? 'invalid' : ''}`} style={style ? style : {}}>
-            {!noLabel && <label className='form__group-label' htmlFor={name}>{label}</label>}
             {
                 number ? NumberInput : dollar ? DollarInput : TextInput
             }
+            {!noLabel && <label className='form__group-label' htmlFor={name}>{label}</label>}
             <div className="form__group-feedback">{error}</div>
         </div>
     )

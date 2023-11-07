@@ -1,28 +1,56 @@
 .form {
-    width: 100%;
+    &__title {
+        margin-bottom: 5rem;
+        font-size: 5rem;
+    }
+
+    &__text {
+        margin-bottom: 2rem;
+        font-weight: 100;
+        font-size: 1.4rem;
+    }
+
+    &__err {
+        color: $primary;
+        text-align: left;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        margin-left: 1rem;
+        font-size: 1.4rem;
+        text-align: center;
+    }
 
     &__group {
-        width: 100%;
+        position: relative;
+        margin-bottom: 15px;
 
         /* ===================================
            Inputs and Select
         ==================================== */
         &-input {
             display: block;
+            padding: 12px 14px;
+            border: 1px solid #dddddd;
             width: 100%;
-            margin-left: 0;
-            margin-right: 0;
-            color: #495058;
-            line-height: inherit;
-            padding: 7px 14px;
-            border-radius: 4px;
-            font-size: 15px;
-            border: 1px solid gainsboro;
-            background-color: white;
+            line-height: normal;
+            resize: none;
+            transition: border-color 0.1s ease-in-out;
+            background: transparent;
+            border-radius: 30px;
+
+            &::placeholder {
+                color: #777777;
+            }
 
             &:focus {
+                border-color: #5d5a5a;
                 outline: none;
-                border: 1px solid mix(white, $primary, 25%);
+            }
+
+            &:not(:placeholder-shown) ~ .form__group-label {
+                opacity: 1;
+                background: white;
+                transform: translateY(0);
             }
         }
 
@@ -31,10 +59,18 @@
         }
 
         &-label {
-            display: block;
-            font-size: 16px;
-            color: #212529;
-            margin-bottom: 10px;
+            position: absolute;
+            bottom: calc(100% - 8px);
+            left: 10px;
+            padding: 0 5px;
+            line-height: normal;
+            color: #777777;
+            font-size: 12px;
+            opacity: 0;
+            background: rgba(255, 255, 255, 0);
+            pointer-events: none;
+            transform: translateY(3px);
+            transition: all 0.3s ease-in-out;
         }
 
         &-feedback {
@@ -53,7 +89,7 @@
             cursor: pointer;
             margin-right: 30px;
             color: #95A5A6;
-            margin-top: 10px;
+            margin-top: 1rem;
 
             &-label {
                 color: #212529;
@@ -127,7 +163,7 @@
                 &:disabled~.form__group-checkbox-label {
                     color: #95A5A6;
                 }
-
+                
                 &:disabled+.form__group-checkbox-box {
                     background: #ECF0F1;
                 }
@@ -144,7 +180,7 @@
                 margin-right: 10px;
                 flex-shrink: 0;
                 transition: background 0.15s, border-color 0.15s;
-
+            
                 &::after {
                     content: '\2714';
                     font-size: 0.8em;
@@ -171,7 +207,11 @@
             }
 
             .form__group-feedback {
-                color: #DD3444;
+                color: $primary;
+                text-align: left;
+                margin-bottom: 2.5rem;
+                margin-left: 1rem;
+                font-size: 1.4rem;
             }
         }
     }
@@ -231,64 +271,6 @@ label.default-label {
 .input:disabled::placeholder {
     color: #95A5A6;
 }
-
-
-/* ===================================
-   Checkbox
-==================================== */
-
-// .checkbox {
-//     display: inline-flex;
-//     align-items: center;
-//     cursor: pointer;
-//     margin-right: 30px;
-// }
-
-// .checkbox-input {
-//     display: none;
-// }
-
-// .checkbox-box {
-//     width: 1.25em;
-//     height: 1.25em;
-//     border: 1px solid #B9C1C6;
-//     border-radius: 3px;
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-//     margin-right: 10px;
-//     flex-shrink: 0;
-//     transition: background 0.15s, border-color 0.15s;
-// }
-
-// .checkbox-box::after {
-//     content: '\2714';
-//     font-size: 0.8em;
-//     color: #fff;
-//     transform: scale(0);
-//     transition: transform 0.15s;
-// }
-
-// .checkbox-input:checked+.checkbox-box {
-//     background: mix(black, $primary, 10%);
-//     border-color: mix(black, $primary, 10%);
-// }
-
-// .checkbox-input:checked+.checkbox-box::after {
-//     transform: scale(1);
-// }
-
-// .checkbox-input:disabled~.checkbox-label {
-//     color: #95A5A6;
-// }
-
-// .checkbox-input:disabled+.checkbox-box {
-//     background: #ECF0F1;
-// }
-
-/* ===================================
-   Toggle
-==================================== */
 
 .toggle {
     --width: 40px;
@@ -360,7 +342,7 @@ label.default-label {
 
 .radio-group-label {
     padding: 8px 14px;
-    font-size: 14px;
+    font-size: 1.4rem;
     font-family: inherit;
     color: #fff !important;
     background: $primary;

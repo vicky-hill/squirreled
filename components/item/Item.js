@@ -12,25 +12,32 @@ const Item = ({ item }) => {
         <>
             <div id="item-card" className='mb-10  w-44 text-left relative' key={item._id}>
                 <div id="item-card__image" className='group h-44 w-44 relative rounded-md overflow-hidden'>
-                    <Image fill style={{ objectFit: 'cover' }} src={item.image} />
+                    <Image
+                        alt="item image"
+                        fill
+                        style={{ objectFit: 'cover' }}
+                        src={item.image}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
+
                     {
                         selectedItems.includes(item._id) ? (
                             <CheckCircle
-                            className={`${!selectedItems.length ? 'hidden' : ''} group-hover:block transition-all absolute top-2 left-2 cursor-pointer`}
-                            size={20}
-                            color="white"
-                            onClick={() => selectItem(item._id)}
-                        />
+                                className={`${!selectedItems.length ? 'hidden' : ''} group-hover:block transition-all absolute top-2 left-2 cursor-pointer`}
+                                size={20}
+                                color="white"
+                                onClick={() => selectItem(item._id)}
+                            />
                         ) : (
                             <Circle
-                            className={`${!selectedItems.length ? 'hidden' : ''} group-hover:block transition-all absolute top-2 left-2 cursor-pointer`}
-                            size={20}
-                            color="white"
-                            onClick={() => selectItem(item._id)}
-                        />
+                                className={`${!selectedItems.length ? 'hidden' : ''} group-hover:block transition-all absolute top-2 left-2 cursor-pointer`}
+                                size={20}
+                                color="white"
+                                onClick={() => selectItem(item._id)}
+                            />
                         )
                     }
-    
+
                     <ArrowRightCircle
                         className='hidden group-hover:block transition-all absolute bottom-2 right-2 cursor-pointer'
                         size={20}

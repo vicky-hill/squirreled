@@ -9,7 +9,10 @@ const Page = ({ children, title = 'Squirreled', protect }) => {
 
     const { currentUser, loading } = useContext(UserContext);
 
+
+
     useEffect(() => {
+        console.log(loading, currentUser, protect)
         if(!loading && !currentUser && protect) {
           router.push('/login')
         }
@@ -22,7 +25,7 @@ const Page = ({ children, title = 'Squirreled', protect }) => {
             </Head>
 
             <Header />
-            { protect && !currentUser ? <p>loading</p> : children }
+            { protect && !currentUser ? <p className='m-36'>loading</p> : children }
         </div>
     )
 }

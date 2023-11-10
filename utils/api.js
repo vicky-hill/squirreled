@@ -2,7 +2,8 @@ import axios from "axios"
 import extractErrorMessage from "./extractErrorMessage";
 
 const instance = axios.create({
-    baseURL: "https://masterapi.pro/api/squirreled/",
+    // baseURL: "https://masterapi.pro/api/squirreled/",
+    baseURL: "http://localhost:4000/api/squirreled/",
     headers: { 'Content-Type': 'application/json' }
 });
 
@@ -11,7 +12,6 @@ instance.interceptors.request.use((config) => {
     config.headers['x-auth-token']  = token ? token : ''
     return config;
 });
-
 
 export const api = {
     get: async (url, body) => {

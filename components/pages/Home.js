@@ -9,7 +9,7 @@ const Home = ({ }) => {
   const { items, search, selectedItems, cancelSelection, openModal, error } = useContext(ItemContext);
 
   if (!items && !error) {
-    return <Page>
+    return <Page protect>
       <div className='container text-center mt-24 pt-10 px-10 lg:px-20 flex justify-between flex-wrap'>
         loading
       </div>
@@ -17,7 +17,7 @@ const Home = ({ }) => {
   }
 
   return (
-    <Page>
+    <Page protect>
       <div className='container mt-10 pt-10 px-10'>
         {
           selectedItems.length ? (
@@ -38,9 +38,9 @@ const Home = ({ }) => {
         <div className='text-center flex flex-wrap gap-7'>
           {
             search ? search.map(item => (
-              <Item item={item} />
+              <Item key={item._id} item={item} />
             )) : items ? items.map(item => (
-              <Item item={item} />
+              <Item key={item._id} item={item} />
             )) : <p>No items found</p>
           }
         </div>

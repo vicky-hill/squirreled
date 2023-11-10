@@ -1,7 +1,8 @@
-import { createContext, useState, useEffect } from "react"
+import { createContext, useState, useEffect, useContext } from "react"
 import api from "@/utils/api"
 import ItemModal from "@/components/item/ItemModal"
 import TrashModal from "@/components/item/TrashModal"
+import UserContext from "./UserContext"
 
 const ItemContext = createContext()
 
@@ -13,9 +14,11 @@ export const ItemContextProvider = ({ children }) => {
   const [item, setItem] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
 
+  const { currentUser } = useContext(UserContext);
+
   useEffect(() => {
-    fetchItems();
-  }, [])
+    currentUser && fetchItems();
+  }, [currentUser])
 
   const fetchItems = async () => {
     try {

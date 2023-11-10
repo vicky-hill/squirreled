@@ -10,7 +10,7 @@ export const UserContextProvider = ({ children }) => {
 
     useEffect(() => {
         checkUserSession();
-    }, [])
+    }, []);
 
     /** Check user session and get current user */
     const checkUserSession = async () => {
@@ -21,14 +21,14 @@ export const UserContextProvider = ({ children }) => {
                 unsubscribe();
             });
 
-            user && setCurrentUser(user);
+            user && setCurrentUser(user);       
             setLoading(false);
         } catch (err) {
             console.log(err);
         }
     }
 
-    /** @param payload: { _id, email } */
+    /** @param payload: { firebaseID, email } */
     const register = async (payload) => {
         try {
             const user = await api.post('user', payload);

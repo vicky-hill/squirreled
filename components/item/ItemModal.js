@@ -37,7 +37,7 @@ const ItemModal = ({ modal, setModal, item }) => {
             <div className="flex items-center flex-col">
                 {
                     locations && locations.map(location => (
-                        <div onClick={() => setSelectedLocation(location._id)} className={getClasses(location._id)}>
+                        <div key={location._id} onClick={() => setSelectedLocation(location._id)} className={getClasses(location._id)}>
                             <span className="mr-3 font-semibold">{location.name}</span>
                             <span className="text-sm text-gray-500">{location.description}</span>
                         </div>

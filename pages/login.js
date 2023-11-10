@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react'
 import UserContext from '@/context/UserContext'
-import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '@/utils/firebase'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
@@ -12,21 +12,19 @@ import * as Yup from 'yup'
 
 const validation = Yup.object({
     email: Yup.string().required('Please enter your email'),
-    password: Yup.string().required('Please enter your password'),
-    password: Yup.string().required('Please confirm your password'),
+    password: Yup.string().required('Please enter your password')
 })
 
-const Signup = ({ }) => {
+const Login = ({ }) => {
     const router = useRouter();
 
-    const { currentUser, register, checkUserSession } = useContext(UserContext);
+    const { currentUser, checkUserSession } = useContext(UserContext);
 
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const [values, setValues] = useState({
         email: "",
-        password: "123456",
-        password2: "123456"
+        password: "123456"
     })
 
     useEffect(() => {
@@ -43,16 +41,14 @@ const Signup = ({ }) => {
 
     const onSubmit = async () => {
         try {
-            if (values.password !== values.password2) return setError("Passwords don't match");
-
             setLoading(true);
             const { email, password } = values;
-            const { user } = await createUserWithEmailAndPassword(auth, email, password);
-
-            const payload = { firebaseID: user.uid, email }
-            register(payload);
+            const { user } = await signInWithEmailAndPassword(auth, email, password);
 
             localStorage.setItem('token', user.accessToken);
+
+            checkUserSession(user.accessToken);
+            router.push('/account');
 
             setValues({ email: '', password: '' });
             setLoading(false);
@@ -67,16 +63,16 @@ const Signup = ({ }) => {
         <Page>
             <Container content="extra-narrow fit-screen" center>
                 <Form values={values} setValues={setValues} onSubmit={onSubmit} validation={validation}>
-                    <h1 className='form__title'>Sign Up</h1>
-            
+                    <h1 className='form__title'>Login</h1>
+                    <p className='form__text'>Please enter your email and password:</p>
+
                     <TextInput name="email" />
                     <TextInput name="password" type="password" />
-                    <TextInput name="password2" type="password" />
 
                     <Button size="big" loading={loading} type="submit" round block className="mt-2">Login</Button>
 
                     <p className='form__err'>{error && error}</p>
-                    <p className='form__text mt-5'>Already have an account? <Link href="/login">Login</Link></p>
+                    <p className='form__text mt-5'>Don't have an account? <Link href="/signup">Sign up</Link></p>
                 </Form>
             </Container>
         </Page>
@@ -84,4 +80,4 @@ const Signup = ({ }) => {
 }
 
 
-export default Signup
+export default Login

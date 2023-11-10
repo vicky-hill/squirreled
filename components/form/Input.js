@@ -28,7 +28,7 @@ const Input = ({ number, dollar, name, label, onChange, value, error, placeholde
             name={name}
             id={name}
             type="text"
-            autocomplete="off"
+            autoComplete="off"
             {...rest}
         />
     )

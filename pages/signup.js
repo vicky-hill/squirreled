@@ -30,7 +30,7 @@ const Signup = ({ }) => {
     })
 
     useEffect(() => {
-        currentUser && router.push('/account');
+        currentUser && router.push('/');
     }, [currentUser]);
 
     useEffect(() => {
@@ -73,7 +73,7 @@ const Signup = ({ }) => {
                     <TextInput name="password" type="password" />
                     <TextInput name="password2" type="password" />
 
-                    <Button size="big" loading={loading} type="submit" round block className="mt-2">Login</Button>
+                    <Button size="big" loading={loading} type="submit" round block className="mt-2">Sign up</Button>
 
                     <p className='form__err'>{error && error}</p>
                     <p className='form__text mt-5'>Already have an account? <Link href="/login">Login</Link></p>

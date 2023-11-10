@@ -28,7 +28,7 @@ const Login = ({ }) => {
     })
 
     useEffect(() => {
-        currentUser && router.push('/account');
+        currentUser && router.push('/');
     }, [currentUser]);
 
     useEffect(() => {
@@ -48,7 +48,7 @@ const Login = ({ }) => {
             localStorage.setItem('token', user.accessToken);
 
             checkUserSession(user.accessToken);
-            router.push('/account');
+            router.push('/');
 
             setValues({ email: '', password: '' });
             setLoading(false);

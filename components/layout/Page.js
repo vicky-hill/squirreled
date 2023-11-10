@@ -9,10 +9,7 @@ const Page = ({ children, title = 'Squirreled', protect }) => {
 
     const { currentUser, loading } = useContext(UserContext);
 
-
-
     useEffect(() => {
-        console.log(loading, currentUser, protect)
         if(!loading && !currentUser && protect) {
           router.push('/login')
         }

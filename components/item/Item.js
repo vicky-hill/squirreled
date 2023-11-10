@@ -54,7 +54,7 @@ const Item = ({ item }) => {
                     />
                 </div>
                 <p className='mt-2 font-medium text-sm'>{item.name}</p>
-                <p className='text-xs text-zinc-500'>{item.location?.description}</p>
+                <p className='text-xs text-zinc-500'>{item.location?.path}</p>
             </div>
         </>
     )

@@ -8,7 +8,7 @@ const nextConfig = {
   images: {
     domains: ['ik.imagekit.io']
   },
-  reactStrictMode: true,
+  reactStrictMode: false,
   distDir: '.next'
 }
 

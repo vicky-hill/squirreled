@@ -22,6 +22,7 @@ export const LocationContextProvider = ({ children }) => {
     }
   }
 
+  console.log(locations)
 
   const value = {
     locations

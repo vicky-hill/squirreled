@@ -1,0 +1,33 @@
+.locations {
+
+    &__col {
+        width: 250px;
+        height: 60vh;
+        padding-right: 30px;
+        padding-left: 15px;
+        border-right: 1px solid gainsboro;
+        display: inline-block;
+
+        &:last-of-type {
+            border: none;
+        }
+    }
+
+    &__item {
+        transition: all 0.2s;
+        margin-bottom: 15px;
+        padding: 5px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        
+
+        &--active {
+            background-color: #fff7ed;
+            font-weight: 800;
+        }
+
+        &--hover {
+            background-color: #fed7aa;
+        }
+    }
+}

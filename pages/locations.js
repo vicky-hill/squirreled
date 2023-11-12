@@ -4,8 +4,8 @@ import { resetServerContext } from 'react-beautiful-dnd'
 import Page from '@/components/layout/Page'
 import LocationContext from '@/context/LocationContext'
 import Container from '@/components/layout/Container'
-import LocationColumn from '@/components/locations/LocationColumn'
-
+import LocationColumn from '@/components/locations/LocationCol'
+import LocationItems from '@/components/locations/LocationItems'
 
 const locations = ({ }) => {
     const [mainLocations, setMainLocations] = useState({
@@ -26,15 +26,43 @@ const locations = ({ }) => {
         hover: null
     });
 
+    const [locationItems, setLocationItems] = useState(null);
+    const [locationPath, setLocationPath] = useState(null);
+
     const { locations } = useContext(LocationContext);
 
     useEffect(() => {
+        setLocationsAndStorageAreas(locations);
+    }, [locations]);
+
+    const setLocationsAndStorageAreas = (locations) => {
         if (locations) {
             setMainLocations({
-                locations
-            })
+                locations,
+                active: locations[0]._id
+            });
+
+            if (locations[0].storage_areas.length) {
+                setStorageAreas1({
+                    locations: locations[0].storage_areas,
+                    active: locations[0].storage_areas[0]._id
+                });
+
+                if (locations[0].storage_areas[0].storage_areas.length) {
+                    setStorageAreas2({
+                        locations: locations[0].storage_areas[0].storage_areas,
+                        active: locations[0].storage_areas[0].storage_areas[0]._id
+                    });
+
+                    if (locations[0].storage_areas[0].storage_areas[0].items.length) {
+                        setLocationItems(locations[0].storage_areas[0].storage_areas[0].items);
+                        setLocationPath(locations[0].storage_areas[0].storage_areas[0].path);
+                    }
+                }
+            }
         }
-    }, [locations]);
+
+    }
 
     /**
      * Activate a location
@@ -42,18 +70,20 @@ const locations = ({ }) => {
      * @param {number} index
      * @param {string} id - _id of selected location
      */
-    const handleLocationClick = (level, id, storageAreas) => {
+    const handleLocationClick = (level, id, storageAreas, items, path) => {
         const setState = {
             [1]: setMainLocations,
             [2]: setStorageAreas1,
             [3]: setStorageAreas2
         }
 
+        // Set active location
         setState[level](state => ({
             ...state,
             active: id
         }));
 
+        // Set storage areas 1
         if (level === 1) {
             setState[2](state => ({
                 ...state,
@@ -67,11 +97,21 @@ const locations = ({ }) => {
             });
         }
 
+        // Set storage areas 2
         if (level === 2) {
             setState[3](state => ({
                 ...state,
                 locations: storageAreas
             }))
+        }
+
+        // Set Location items 
+        if (items) {
+            setLocationItems(items);
+            setLocationPath(path);
+        } else {
+            setLocationItems(null);
+            setLocationPath(null);
         }
     }
 
@@ -81,7 +121,7 @@ const locations = ({ }) => {
 
     const onDragUpdate = (results) => {
         console.log(results)
-        setHover(results?.destination?.droppableId)
+        // setHover(results?.destination?.droppableId)
     }
 
     if (!locations) {
@@ -100,52 +140,34 @@ const locations = ({ }) => {
                     {/* Main Locations */}
                     <LocationColumn
                         locations={mainLocations.locations}
-                        handleLocationClick={(id, storage) => handleLocationClick(1, id, storage)}
+                        handleLocationClick={(id, storage, items, path) => handleLocationClick(1, id, storage, items, path)}
                         active={mainLocations.active}
                         hover={mainLocations.hover}
                     />
 
                     {/* Storage Areas 1 */}
-                    { storageAreas1.locations.length ? (
+                    {storageAreas1.locations.length ? (
                         <LocationColumn
                             locations={storageAreas1.locations}
-                            handleLocationClick={(id, storage) => handleLocationClick(2, id, storage)}
+                            handleLocationClick={(id, storage, items, path) => handleLocationClick(2, id, storage, items, path)}
                             active={storageAreas1.active}
                             hover={storageAreas1.hover}
                         />
-                    ) : null }
+                    ) : null}
 
                     {/* Storage Areas 2 */}
-                    { storageAreas2.locations.length ? (
+                    {storageAreas2.locations.length ? (
                         <LocationColumn
                             locations={storageAreas2.locations}
-                            handleLocationClick={(index, id) => handleLocationClick(3, index, id)}
+                            handleLocationClick={(id, storage, items, path) => handleLocationClick(3, id, storage, items, path)}
                             active={storageAreas2.active}
                             hover={storageAreas2.hover}
                         />
-                    ) : null }
+                    ) : null}
 
-
-
-
-                    {/* <Droppable droppableId="ROOT2">
-                            {(provided) => (
-                                <div {...provided.droppableProps} ref={provided.innerRef} id="items" className="bg-yellow-200 w-96 h-28 ml-10">
-
-                                    {items.map((item, i) => (
-                                        <Draggable draggableId={item.id} index={i} key={i}>
-                                            {(provided) => (
-                                                <li ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                                                    {item.name}
-                                                </li>
-                                            )}
-                                        </Draggable>
-                                    ))}
-                                    {provided.placeholder}
-                                </div>
-                            )}
-                        </Droppable> */}
-
+                    {
+                        locationItems && <LocationItems path={locationPath} items={locationItems} />
+                    }
                 </DragDropContext>
             </Container>
         </Page>

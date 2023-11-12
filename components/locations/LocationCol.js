@@ -12,7 +12,7 @@ const LocationColumn = ({ locations, handleLocationClick, active, hover }) => {
     return (
         <div className="locations__col">
             {
-                locations.map(({ _id, name, storage_areas }, i) => (
+                locations.map(({ _id, name, storage_areas, items, path }) => (
                     <Droppable droppableId={_id}  key={_id}>
                         {(provided) => (
                             <div
@@ -20,7 +20,7 @@ const LocationColumn = ({ locations, handleLocationClick, active, hover }) => {
                                 ref={provided.innerRef}
                                 id="locations"
                                 className={getClasses(_id)}
-                                onClick={() => handleLocationClick(_id, storage_areas)}
+                                onClick={() => handleLocationClick(_id, storage_areas, items, path)}
                             >
                                 {name}
                             </div>

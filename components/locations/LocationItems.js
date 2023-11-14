@@ -5,11 +5,11 @@ const LocationItems = ({ path, items }) => {
 
     return (
         <div className='ml-10'>
-            <h1 className='text-xl font-black mb-1'>{path}</h1>
+            <h1 className='text-xl font-semibold mb-1'>{path}</h1>
             <p className='mb-7 text-zinc-400'>{items[0].location}</p>
             <Droppable droppableId="items">
                 {(provided) => (
-                    <div {...provided.droppableProps} ref={provided.innerRef} id="items" className='h-[65vh] overflow-scroll pr-16'>
+                    <div {...provided.droppableProps} ref={provided.innerRef} id="items" className='h-[60vh] overflow-scroll pr-32'>
                         {items.map((item, i) => (
                             <Draggable draggableId={item._id} index={i} key={i}>
                                 {(provided) => (
@@ -25,7 +25,7 @@ const LocationItems = ({ path, items }) => {
                                         </div>
                                         <div>
                                             <p className='text-sm'>{item.name}</p>
-                                            <p className='text-zinc-400 text-xs'>{item._id}</p>
+                                            <p className='text-zinc-400 text-xs font-[300]'>{item._id}</p>
                                         </div>
                                     </div>
                                 )}

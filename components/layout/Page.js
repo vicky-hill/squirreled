@@ -3,6 +3,8 @@ import Head from 'next/head'
 import Header from './Header'
 import UserContext from '@/context/UserContext'
 import { useRouter } from 'next/router'
+import NavigationBar from './NavigationBar'
+import Container from './Container'
 
 const Page = ({ children, title = 'Squirreled', protect }) => {
     const router = useRouter();
@@ -10,10 +12,10 @@ const Page = ({ children, title = 'Squirreled', protect }) => {
     const { currentUser, loading } = useContext(UserContext);
 
     useEffect(() => {
-        if(!loading && !currentUser && protect) {
-          router.push('/login')
+        if (!loading && !currentUser && protect) {
+            router.push('/login')
         }
-      }, [currentUser, loading]);
+    }, [currentUser, loading]);
 
     return (
         <div>
@@ -22,7 +24,13 @@ const Page = ({ children, title = 'Squirreled', protect }) => {
             </Head>
 
             <Header />
-            { protect && !currentUser ? <p className='m-36'>loading</p> : children }
+            {
+                protect && !currentUser ? <p className='m-36'>loading</p> :
+                    <Container className="mt-3 mb-2">
+                        <NavigationBar />
+                        {children}
+                    </Container>
+            }
         </div>
     )
 }

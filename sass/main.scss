@@ -1,10 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 @import './base/base';
 @import './base/reset';
 @import './base/layout';
@@ -15,3 +11,8 @@
 @import "./elements/react-select";
 
 @import "./components/locations";
+@import "./components/navigation";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

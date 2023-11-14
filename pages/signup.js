@@ -30,7 +30,7 @@ const Signup = ({ }) => {
     })
 
     useEffect(() => {
-        currentUser && router.push('/');
+        currentUser && router.push('/items');
     }, [currentUser]);
 
     useEffect(() => {

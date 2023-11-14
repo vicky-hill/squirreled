@@ -10,7 +10,7 @@ const Header = ({ }) => {
     const orange = 'text-[#D66330]'
 
     return (
-        <div className='w-full shadow-sm bg-zinc-800 text-center text-white font-bold tracking-widest py-4 px-16 mb-4 flex items-center'>
+        <div className='w-full shadow-sm bg-zinc-800 text-center text-white font-bold tracking-widest py-4 px-16 flex items-center'>
             <div id="logo" className='h-12 w-12 relative mr-2'>
                 <Image
                     alt="logo"

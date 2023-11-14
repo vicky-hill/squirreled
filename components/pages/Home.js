@@ -4,6 +4,7 @@ import ItemContext from '@/context/ItemContext'
 import Item from '../item/Item'
 import AddItem from '../add/AddItem'
 import { X, ArrowRightCircle } from 'react-feather'
+import Container from '../layout/Container'
 
 const Home = ({ }) => {
   const { items, search, selectedItems, cancelSelection, openModal, error } = useContext(ItemContext);
@@ -18,7 +19,7 @@ const Home = ({ }) => {
 
   return (
     <Page protect>
-      <div className='container mt-10 pt-10 px-10'>
+
         {
           selectedItems.length ? (
             <>
@@ -44,10 +45,9 @@ const Home = ({ }) => {
             )) : <p>No items found</p>
           }
         </div>
-      </div>
 
+        <AddItem />
 
-      <AddItem />
     </Page>
   )
 }

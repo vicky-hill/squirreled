@@ -1,10 +1,14 @@
-import Home from '@/components/pages/Home'
+import { useEffect } from 'react'
+import { useRouter } from 'next/router' 
 
 const Index = ({ }) => {
+  const router = useRouter();
 
-  return (
-      <Home />
-  )
+  useEffect(() => {
+    router.push('/items');
+  }, [])
+
+  return null;
 }
 
 export default Index

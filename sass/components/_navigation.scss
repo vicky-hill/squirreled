@@ -1,0 +1,23 @@
+.navigation {
+    &__bar {
+        padding-bottom: 15px;
+        border-bottom: 1px solid $grey-light;
+        margin-bottom: 50px;
+
+        &-link {
+            color: $grey-dark;
+            margin-right: 10px;
+            font-weight: 700;
+            padding: 2px 12px;
+            padding-bottom: 4px;
+            transition: all .5s;
+
+            &--active {
+                background-color: $orange;
+                color: white;
+                border-radius: 50px;
+    
+            }
+        }
+    }
+}

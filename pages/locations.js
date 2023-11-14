@@ -3,7 +3,6 @@ import { DragDropContext } from 'react-beautiful-dnd'
 import { resetServerContext } from 'react-beautiful-dnd'
 import Page from '@/components/layout/Page'
 import LocationContext from '@/context/LocationContext'
-import Container from '@/components/layout/Container'
 import LocationColumn from '@/components/locations/LocationCol'
 import LocationItems from '@/components/locations/LocationItems'
 import ItemContext from '@/context/ItemContext'
@@ -159,7 +158,7 @@ const locations = ({ }) => {
 
     return (
         <Page>
-            <Container className='flex'>
+            <div className='flex'>
                 <DragDropContext onDragEnd={onDragEnd} onDragUpdate={onDragUpdate}>
 
                     {/* Main Locations */}
@@ -190,7 +189,7 @@ const locations = ({ }) => {
                         locationItems && <LocationItems path={locationPath} items={locationItems} />
                     }
                 </DragDropContext>
-            </Container>
+            </div>
         </Page>
     )
 }

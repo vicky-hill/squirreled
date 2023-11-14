@@ -2,10 +2,10 @@
 
     &__col {
         width: 250px;
-        height: 72vh;
+        height: 70vh;
         padding-right: 30px;
         padding-left: 15px;
-        border-right: 1px solid gainsboro;
+        border-right: 1px solid $grey-light;
         display: inline-block;
 
         &:last-of-type {
@@ -23,7 +23,7 @@
 
         &--active {
             background-color: #fff7ed;
-            font-weight: 800;
+            font-weight: 600;
         }
 
         &--hover {

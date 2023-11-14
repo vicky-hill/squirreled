@@ -55,7 +55,7 @@ export const ItemContextProvider = ({ children }) => {
 
       setItems(items => (
         items.map(item => item._id === itemID ? updatedItem : item)
-      ))
+      ));
     } catch (err) {
       console.log(err);
     }

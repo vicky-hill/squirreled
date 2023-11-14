@@ -27,7 +27,7 @@ const Search = ({ }) => {
     <input
       placeholder='Find anything...'
       type="text"
-      className='shadow-sm text-black font-normal rounded-full focus:outline-none py-2 px-5 w-72 lg:w-96 ml-64'
+      className='shadow-sm text-black font-normal rounded-lg focus:outline-none py-2 px-5 w-72 lg:w-[500px] ml-52'
       onChange={onChange}
       value={value}
     />

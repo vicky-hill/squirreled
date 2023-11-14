@@ -1,35 +1,37 @@
 import { useContext, useState, useEffect } from 'react'
-import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
+import { DragDropContext } from 'react-beautiful-dnd'
 import { resetServerContext } from 'react-beautiful-dnd'
 import Page from '@/components/layout/Page'
 import LocationContext from '@/context/LocationContext'
 import Container from '@/components/layout/Container'
 import LocationColumn from '@/components/locations/LocationCol'
 import LocationItems from '@/components/locations/LocationItems'
+import ItemContext from '@/context/ItemContext'
 
 const locations = ({ }) => {
     const [mainLocations, setMainLocations] = useState({
         locations: [],
-        active: null,
-        hover: null
+        active: null
     });
 
     const [storageAreas1, setStorageAreas1] = useState({
         locations: [],
-        active: null,
-        hover: null
+        active: null
     });
 
     const [storageAreas2, setStorageAreas2] = useState({
         locations: [],
-        active: null,
-        hover: null
+        active: null
     });
 
     const [locationItems, setLocationItems] = useState(null);
     const [locationPath, setLocationPath] = useState(null);
+    const [locationID, setLocationID] = useState(null);
+
+    const [hover, setHover] = useState(null);
 
     const { locations } = useContext(LocationContext);
+    const { moveItem } = useContext(ItemContext);
 
     useEffect(() => {
         setLocationsAndStorageAreas(locations);
@@ -57,6 +59,7 @@ const locations = ({ }) => {
                     if (locations[0].storage_areas[0].storage_areas[0].items.length) {
                         setLocationItems(locations[0].storage_areas[0].storage_areas[0].items);
                         setLocationPath(locations[0].storage_areas[0].storage_areas[0].path);
+                        setLocationID(locations[0].storage_areas[0].storage_areas[0]._id);
                     }
                 }
             }
@@ -109,19 +112,25 @@ const locations = ({ }) => {
         if (items) {
             setLocationItems(items);
             setLocationPath(path);
+            setLocationID(id);
         } else {
             setLocationItems(null);
             setLocationPath(null);
+            setLocationID(null);
         }
     }
 
-    const onDragEnd = (results) => {
-        console.log(results)
+    const onDragEnd = async (results) => {
+        const { draggableId, destination } = results;
+        moveItem(draggableId, destination.droppableId);
+        setLocationItems(items => items.filter(item => item._id !== draggableId));
+
     }
 
     const onDragUpdate = (results) => {
-        console.log(results)
-        // setHover(results?.destination?.droppableId)
+        if (results?.destination?.droppableId !== locationID) {
+            setHover(results?.destination?.droppableId)
+        }
     }
 
     if (!locations) {
@@ -142,7 +151,7 @@ const locations = ({ }) => {
                         locations={mainLocations.locations}
                         handleLocationClick={(id, storage, items, path) => handleLocationClick(1, id, storage, items, path)}
                         active={mainLocations.active}
-                        hover={mainLocations.hover}
+                        hover={hover}
                     />
 
                     {/* Storage Areas 1 */}
@@ -151,7 +160,7 @@ const locations = ({ }) => {
                             locations={storageAreas1.locations}
                             handleLocationClick={(id, storage, items, path) => handleLocationClick(2, id, storage, items, path)}
                             active={storageAreas1.active}
-                            hover={storageAreas1.hover}
+                            hover={hover}
                         />
                     ) : null}
 
@@ -161,7 +170,7 @@ const locations = ({ }) => {
                             locations={storageAreas2.locations}
                             handleLocationClick={(id, storage, items, path) => handleLocationClick(3, id, storage, items, path)}
                             active={storageAreas2.active}
-                            hover={storageAreas2.hover}
+                            hover={hover}
                         />
                     ) : null}
 

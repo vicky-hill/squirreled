@@ -73,7 +73,7 @@ const locations = ({ }) => {
      * @param {number} index
      * @param {string} id - _id of selected location
      */
-    const handleLocationClick = (level, id, storageAreas, items, path) => {
+    const handleLocationClick = (level, id, storage_areas, items, path) => {
         const setState = {
             [1]: setMainLocations,
             [2]: setStorageAreas1,
@@ -86,25 +86,45 @@ const locations = ({ }) => {
             active: id
         }));
 
-        // Set storage areas 1
+        // Main location was set, then set storage areas 1 and 2
         if (level === 1) {
+            const storage1Locations = storage_areas;
+            const activeStorage1ID = storage_areas[0]._id;
+
+            const storage2Locations = storage_areas[0].storage_areas;
+            const activeStorage2ID = storage_areas[0].storage_areas[0]?._id;
+
             setState[2](state => ({
                 ...state,
-                locations: storageAreas
+                locations: storage1Locations,
+                active: activeStorage1ID
             }));
 
-            setState[3]({
-                locations: [],
-                active: null,
-                hover: null
-            });
+            if (storage2Locations.length) {
+                console.log('storage 2', storage2Locations)
+
+                setState[3]({
+                    locations: storage2Locations,
+                    active: activeStorage2ID
+                });
+
+                setLocationItems(storage2Locations[0].items);
+                setLocationPath(storage2Locations[0].path);
+                setLocationID(storage2Locations[0]._id);
+
+            } else {
+                setState[3]({
+                    locations: [],
+                    active: null
+                });
+            }
         }
 
         // Set storage areas 2
         if (level === 2) {
             setState[3](state => ({
                 ...state,
-                locations: storageAreas
+                locations: storage_areas
             }))
         }
 
@@ -113,10 +133,6 @@ const locations = ({ }) => {
             setLocationItems(items);
             setLocationPath(path);
             setLocationID(id);
-        } else {
-            setLocationItems(null);
-            setLocationPath(null);
-            setLocationID(null);
         }
     }
 
@@ -155,24 +171,20 @@ const locations = ({ }) => {
                     />
 
                     {/* Storage Areas 1 */}
-                    {storageAreas1.locations.length ? (
-                        <LocationColumn
-                            locations={storageAreas1.locations}
-                            handleLocationClick={(id, storage, items, path) => handleLocationClick(2, id, storage, items, path)}
-                            active={storageAreas1.active}
-                            hover={hover}
-                        />
-                    ) : null}
+                    <LocationColumn
+                        locations={storageAreas1.locations}
+                        handleLocationClick={(id, storage, items, path) => handleLocationClick(2, id, storage, items, path)}
+                        active={storageAreas1.active}
+                        hover={hover}
+                    />
 
                     {/* Storage Areas 2 */}
-                    {storageAreas2.locations.length ? (
-                        <LocationColumn
-                            locations={storageAreas2.locations}
-                            handleLocationClick={(id, storage, items, path) => handleLocationClick(3, id, storage, items, path)}
-                            active={storageAreas2.active}
-                            hover={hover}
-                        />
-                    ) : null}
+                    <LocationColumn
+                        locations={storageAreas2.locations}
+                        handleLocationClick={(id, storage, items, path) => handleLocationClick(3, id, storage, items, path)}
+                        active={storageAreas2.active}
+                        hover={hover}
+                    />
 
                     {
                         locationItems && <LocationItems path={locationPath} items={locationItems} />

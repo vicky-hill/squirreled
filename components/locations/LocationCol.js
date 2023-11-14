@@ -12,7 +12,7 @@ const LocationColumn = ({ locations, handleLocationClick, active, hover }) => {
     return (
         <div className="locations__col">
             {
-                locations.map(({ _id, name, storage_areas, items, path }) => (
+                locations.length ? locations.map(({ _id, name, storage_areas, items, path }) => (
                     <Droppable droppableId={_id}  key={_id}>
                         {(provided) => (
                             <div
@@ -26,7 +26,7 @@ const LocationColumn = ({ locations, handleLocationClick, active, hover }) => {
                             </div>
                         )}
                     </Droppable>
-                ))
+                )) : <p>No storage areas here yet</p>
             }
         </div>
     )

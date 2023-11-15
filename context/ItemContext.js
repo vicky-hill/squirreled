@@ -7,12 +7,14 @@ import UserContext from "./UserContext"
 const ItemContext = createContext()
 
 export const ItemContextProvider = ({ children }) => {
+  const [loading, setLoading] = useState(true);
   const [items, setItems] = useState(null);
   const [error, setError] = useState(null);
   const [search, setSearch] = useState(null);
   const [modal, setModal] = useState(null);
   const [item, setItem] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
+  const [locationItems, setLocationItems] = useState(null);
 
   const { currentUser } = useContext(UserContext);
 
@@ -24,6 +26,7 @@ export const ItemContextProvider = ({ children }) => {
     try {
       const items = await api.get('items');
       setItems(items);
+      setLoading(false);
     } catch (err) {
       setError('Failed to load squirreled items');
     }
@@ -56,6 +59,10 @@ export const ItemContextProvider = ({ children }) => {
       setItems(items => (
         items.map(item => item._id === itemID ? updatedItem : item)
       ));
+
+      setLocationItems(items => (
+        items.filter(item => item._id !== itemID)
+      ))
     } catch (err) {
       console.log(err);
     }
@@ -126,6 +133,14 @@ export const ItemContextProvider = ({ children }) => {
     setSelectedItems([]);
   }
 
+  const getLocationItems = (locationID) => {
+    if (!locationID || !items) return;
+
+    setLocationItems(items.filter(item =>
+      item.location && item.location._id.toString() === locationID.toString()
+    ))
+  }
+
   const value = {
     items,
     search,
@@ -139,7 +154,11 @@ export const ItemContextProvider = ({ children }) => {
     selectItem,
     selectedItems,
     cancelSelection,
-    error
+    locationItems,
+    getLocationItems,
+    setLocationItems,
+    error,
+    loading
   }
 
   return (

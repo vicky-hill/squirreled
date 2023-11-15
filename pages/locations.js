@@ -23,21 +23,18 @@ const locations = ({ }) => {
         active: null
     });
 
-    const [locationItems, setLocationItems] = useState(null);
-    const [locationPath, setLocationPath] = useState(null);
     const [locationID, setLocationID] = useState(null);
-
     const [hover, setHover] = useState(null);
 
     const { locations } = useContext(LocationContext);
-    const { moveItem } = useContext(ItemContext);
+    const { items, locationItems, getLocationItems, setLocationItems, moveItem, loading: itemsLoading } = useContext(ItemContext);
 
     useEffect(() => {
-        setLocationsAndStorageAreas(locations);
-    }, [locations]);
+        !itemsLoading && setLocationsAndStorageAreas(locations);
+    }, [locations, itemsLoading]);
 
     const setLocationsAndStorageAreas = (locations) => {
-        if (locations) {
+        if (locations && items) {
             setMainLocations({
                 locations,
                 active: locations[0]._id
@@ -56,8 +53,7 @@ const locations = ({ }) => {
                     });
 
                     if (locations[0].storage_areas[0].storage_areas[0].items.length) {
-                        setLocationItems(locations[0].storage_areas[0].storage_areas[0].items);
-                        setLocationPath(locations[0].storage_areas[0].storage_areas[0].path);
+                        getLocationItems(locations[0].storage_areas[0].storage_areas[0]._id)
                         setLocationID(locations[0].storage_areas[0].storage_areas[0]._id);
                     }
                 }
@@ -72,7 +68,7 @@ const locations = ({ }) => {
      * @param {number} index
      * @param {string} id - _id of selected location
      */
-    const handleLocationClick = (level, id, storage_areas, items, path) => {
+    const handleLocationClick = (level, id, storage_areas) => {
         const setState = {
             [1]: setMainLocations,
             [2]: setStorageAreas1,
@@ -100,15 +96,12 @@ const locations = ({ }) => {
             }));
 
             if (storage2Locations.length) {
-                console.log('storage 2', storage2Locations)
-
                 setState[3]({
                     locations: storage2Locations,
                     active: activeStorage2ID
                 });
 
-                setLocationItems(storage2Locations[0].items);
-                setLocationPath(storage2Locations[0].path);
+                getLocationItems(storage2Locations[0]._id);
                 setLocationID(storage2Locations[0]._id);
 
             } else {
@@ -124,22 +117,23 @@ const locations = ({ }) => {
             setState[3](state => ({
                 ...state,
                 locations: storage_areas
-            }))
+            }));
         }
 
-        // Set Location items 
-        if (items) {
-            setLocationItems(items);
-            setLocationPath(path);
+        if (level === 3) {
             setLocationID(id);
+            getLocationItems(id);
         }
     }
 
     const onDragEnd = async (results) => {
         const { draggableId, destination } = results;
-        moveItem(draggableId, destination.droppableId);
-        setLocationItems(items => items.filter(item => item._id !== draggableId));
 
+        if (destination) {
+            moveItem(draggableId, destination.droppableId);
+            setLocationItems (items => items.filter(item => item._id !== draggableId));
+            setHover(null);
+        }
     }
 
     const onDragUpdate = (results) => {
@@ -164,7 +158,7 @@ const locations = ({ }) => {
                     {/* Main Locations */}
                     <LocationColumn
                         locations={mainLocations.locations}
-                        handleLocationClick={(id, storage, items, path) => handleLocationClick(1, id, storage, items, path)}
+                        handleLocationClick={(id, storage) => handleLocationClick(1, id, storage)}
                         active={mainLocations.active}
                         hover={hover}
                     />
@@ -172,7 +166,7 @@ const locations = ({ }) => {
                     {/* Storage Areas 1 */}
                     <LocationColumn
                         locations={storageAreas1.locations}
-                        handleLocationClick={(id, storage, items, path) => handleLocationClick(2, id, storage, items, path)}
+                        handleLocationClick={(id, storage) => handleLocationClick(2, id, storage)}
                         active={storageAreas1.active}
                         hover={hover}
                     />
@@ -180,13 +174,13 @@ const locations = ({ }) => {
                     {/* Storage Areas 2 */}
                     <LocationColumn
                         locations={storageAreas2.locations}
-                        handleLocationClick={(id, storage, items, path) => handleLocationClick(3, id, storage, items, path)}
+                        handleLocationClick={(id, storage) => handleLocationClick(3, id, storage)}
                         active={storageAreas2.active}
                         hover={hover}
                     />
 
                     {
-                        locationItems && <LocationItems path={locationPath} items={locationItems} />
+                        locationItems && <LocationItems items={locationItems} />
                     }
                 </DragDropContext>
             </div>

@@ -1,12 +1,16 @@
 import { Droppable, Draggable } from 'react-beautiful-dnd'
 import Image from 'next/image';
 
-const LocationItems = ({ path, items }) => {
+const LocationItems = ({ items }) => {
+
+    if (!items.length) {
+        return
+    }
 
     return (
         <div className='ml-10'>
-            <h1 className='text-xl font-semibold mb-1'>{path}</h1>
-            <p className='mb-7 text-zinc-400'>{items[0].location}</p>
+            <h1 className='text-xl font-semibold mb-1'>{items[0].location.path}</h1>
+            <p className='mb-7 text-zinc-400'>{items[0].location._id}</p>
             <Droppable droppableId="items">
                 {(provided) => (
                     <div {...provided.droppableProps} ref={provided.innerRef} id="items" className='h-[60vh] overflow-scroll pr-32'>

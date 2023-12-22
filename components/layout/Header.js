@@ -10,8 +10,8 @@ const Header = ({ }) => {
     const orange = 'text-[#D66330]'
 
     return (
-        <div className='w-full shadow-sm bg-zinc-800 text-center text-white font-bold tracking-widest py-4 px-16 flex items-center'>
-            <div id="logo" className='h-12 w-12 relative mr-2'>
+        <div className='w-full shadow-sm bg-zinc-800 text-center text-white font-bold tracking-widest py-2 px-16 flex items-center'>
+            <div id="logo" className='h-10 w-10 relative mr-2'>
                 <Image
                     alt="logo"
                     src={squirrel}
@@ -20,7 +20,7 @@ const Header = ({ }) => {
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
             </div>
-            <span className='logo text-4xl'>Squirreled</span>
+            <span className='logo text-2xl'>Squirreled</span>
             <Search />
             {
                 currentUser && (

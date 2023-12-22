@@ -52,7 +52,7 @@ const locations = ({ }) => {
                         active: locations[0].storage_areas[0].storage_areas[0]._id
                     });
 
-                    if (locations[0].storage_areas[0].storage_areas[0].items.length) {
+                    if (locations[0].storage_areas[0].storage_areas[0].items?.length) {
                         getLocationItems(locations[0].storage_areas[0].storage_areas[0]._id)
                         setLocationID(locations[0].storage_areas[0].storage_areas[0]._id);
                     }
